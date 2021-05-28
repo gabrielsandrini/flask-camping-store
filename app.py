@@ -4,6 +4,7 @@
 
 # É importado da biblioteca flask, a classe Flask.
 from flask import Flask
+from flask import render_template, request
 
 # É importado do arquivo config.py, as variáveis app_config, app_active que app_config: possui as configurações e o tipo de ambiente a ser utilizado (Desenvolvimento, Teste ou Producao). E app_active: possui as configurações de qual ambiente está sendo utilizado por meio da variável de ambiente FLASK_ENV.
 from config import app_config, app_active
@@ -29,7 +30,7 @@ def create_app(config_name):
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.
     @app.route('/') 
     def index():
-        return 'Meu Primeiro APP Flask!' 
+        return render_template("index.html")
 
 
     # Retorno do método create_app(). Retorna a instância do app criada.
