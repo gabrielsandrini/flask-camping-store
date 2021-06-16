@@ -30,7 +30,7 @@ def create_app(config_name):
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.
     @app.route('/') 
     def index():
-        return render_template("index.html")
+        return render_template("home.html")
 
 
     # Retorno do método create_app(). Retorna a instância do app criada.
