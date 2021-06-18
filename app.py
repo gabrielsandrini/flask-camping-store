@@ -32,6 +32,9 @@ def create_app(config_name):
     def index():
         return render_template("home.html")
 
+    @app.route('/produto')
+    def produto():
+        return render_template("produto.html")
 
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app

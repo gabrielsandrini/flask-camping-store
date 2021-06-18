@@ -1,0 +1,43 @@
+.product-img {
+  border: 1px solid black;
+  width: 90%;
+}
+
+.container-produto {
+  max-width: 100%;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin-top: 20px;
+  overflow-x: hidden;
+}
+
+.info-produto {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.product-title {
+  margin: 20px;
+}
+
+.card-preco-container {
+  text-align: left;
+}
+
+.card-preco-valor {
+  text-align: left;
+  color: green;
+  font-weight: bold;
+}
+
+.product-description {
+  text-align: left;
+  margin-left: 4%;
+}
+
+.product-description p {
+  text-align: left;
+  max-width: 80%;
+}
