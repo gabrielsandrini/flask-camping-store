@@ -10,7 +10,10 @@ from flask import render_template, request
 from config import app_config, app_active
 
 # A variável config recebe a atribuição do ambiente ativo.
-config = app_config[app_active] 
+config = app_config[app_active]
+
+# Importando a biblioteca do SQLAlchemy para manipular o banco de dados
+from flask_sqlalchemy import SQLAlchemy
 
 # Método create_app que recebe como argumento com todas as configurações da aplicação.
 def create_app(config_name):
@@ -25,6 +28,20 @@ def create_app(config_name):
     # Efetua o carregamento do arquivo config.py
     app.config.from_object(app_config[config_name]) 
     app.config.from_pyfile('config.py')
+
+     # Adicionando configurações necessárias para utilizarmos o SQLAlchemy.
+    # A constante SQLALCHEMY_DATABASE_URI foi definida no arquivo config.py, a qual indica o caminho do banco de dados.
+    app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLALCHEMY_DATABASE_URI
+
+    # Configuração indicando que as modificações do banco de dados poderão ser exclusivamente pela aplicação.
+    # Se True, permite outras formas.
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+
+    # A variável db receberá a atribuição de uma instância do SQLAlchemy passando a aplicação app criada.
+    db = SQLAlchemy(config.APP) # <---  INSTÂNCIA db do SQLAlchemy a ser utilizada pelos models.  
+
+    # Inicializando o banco de dados para a aplicação.
+    db.init_app(app)
 
     # Primeira rota a ser criada. A rota principal root.
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.

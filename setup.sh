@@ -1,7 +1,7 @@
  pip install --upgrade pip  
- pip install Flask
+ pip install Flask==1.1.2
  pip install Flask-SQLAlchemy
- pip install Flask-Migrate
+ pip install Flask-Migrate==2.7.0
  pip install Flask-Script
  pip install passlib
  pip install Flask-admin

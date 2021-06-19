@@ -27,6 +27,10 @@ class Config(object):
     # O banco de dados será chamado de app.db. Pode ser utilizado qualquer nome.
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(ROOT_DIR, 'app.db')
 
+    # Configuração indicando que as modificações do banco de dados poderão ser exclusivamente pela aplicação.
+    # Se True, permite outras formas.
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+
     # CHAVE API COPIADA DO SITE - UNICA PARA CADA UM ** OMITIR ANTES DE DIVULGAR CODIGO ***
     # Inserida para enviar email por meio do serviço sendgrid. (veremos mais adiante)
     SENDGRID_API_KEY = 'Copiar a chave do site'
