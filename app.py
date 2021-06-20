@@ -4,10 +4,16 @@
 
 # É importado da biblioteca flask, a classe Flask.
 from flask import Flask
-from flask import render_template, request
+from flask import render_template, request,redirect
 
 # É importado do arquivo config.py, as variáveis app_config, app_active que app_config: possui as configurações e o tipo de ambiente a ser utilizado (Desenvolvimento, Teste ou Producao). E app_active: possui as configurações de qual ambiente está sendo utilizado por meio da variável de ambiente FLASK_ENV.
 from config import app_config, app_active
+
+# Importando a biblioteca de administração para utilizar o método start-views 
+from admin.Admin import start_views  
+
+# Adicionando o controller de Usuário para efetuar a comunicação entre a view e a model.
+from controllers.User import UserController
 
 # A variável config recebe a atribuição do ambiente ativo.
 config = app_config[app_active]
@@ -39,6 +45,10 @@ def create_app(config_name):
 
     # A variável db receberá a atribuição de uma instância do SQLAlchemy passando a aplicação app criada.
     db = SQLAlchemy(config.APP) # <---  INSTÂNCIA db do SQLAlchemy a ser utilizada pelos models.  
+
+    # Adicionado a inicialização das visualizações das views Admin. Ativa a área admin do Flask.
+    # A Admin será criada dentro do arquivo admin/Admin.py
+    start_views(app,db)     
 
     # Inicializando o banco de dados para a aplicação.
     db.init_app(app)

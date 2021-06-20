@@ -31,7 +31,7 @@ class User(db.Model):
     last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
     recovery_code=db.Column(db.String(100),nullable=True) 
     active=db.Column(db.Boolean(),default=1,nullable=False) 
-    permission=db.Column(db.Integer,db.ForeignKey(Permission.id),nullable=False)
+    permission_fk=db.Column(db.Integer,db.ForeignKey(Permission.id),nullable=False)
 
 class ProductCategory(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -42,9 +42,9 @@ class Product(db.Model):
     title=db.Column(db.String(45), nullable=False)
     description=db.Column(db.Text(), nullable=True)
     price=db.Column(db.Float(), nullable=False)
-    category=db.Column(db.Integer, db.ForeignKey(ProductCategory.id), nullable=False)
+    category_fk=db.Column(db.Integer, db.ForeignKey(ProductCategory.id), nullable=False)
 
-class StatusPedido(db.Model):
+class OrderStatus(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     description=db.Column(db.String(15),unique=True, nullable=False)
 
@@ -56,8 +56,8 @@ order_products_table = db.Table('order_products',
 
 class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    status=db.Column(db.Integer, db.ForeignKey(StatusPedido.id))
-    products = db.relationship('order_products', secondary=order_products_table, lazy='subquery', backref=db.backref('order', lazy=True))
+    status=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
+    products_fk = db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
 
 if __name__ == '__main__':
     manager.run()

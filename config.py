@@ -29,7 +29,7 @@ class Config(object):
 
     # Configuração indicando que as modificações do banco de dados poderão ser exclusivamente pela aplicação.
     # Se True, permite outras formas.
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # CHAVE API COPIADA DO SITE - UNICA PARA CADA UM ** OMITIR ANTES DE DIVULGAR CODIGO ***
     # Inserida para enviar email por meio do serviço sendgrid. (veremos mais adiante)

@@ -26,3 +26,4 @@ python3 **init**.py
 ### Migrations
 
 python3 migrate.py db init
+python3 migrate.py db migrate
