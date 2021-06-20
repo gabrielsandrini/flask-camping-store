@@ -56,8 +56,9 @@ order_products_table = db.Table('order_products',
 
 class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    status=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
-    products_fk = db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
+    status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
+    product_fk = db.Column(db.Integer, db.ForeignKey(Product.id), nullable=False)
+    # db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
 
 if __name__ == '__main__':
     manager.run()

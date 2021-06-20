@@ -21,7 +21,14 @@ order_products_table = db.Table('order_products',
 class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
-    products_fk=db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
+    #products_fk=db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
+    product_fk = db.Column(db.Integer, db.ForeignKey(Product.id), nullable=False)
     
     status = relationship(OrderStatus)
+    product = relationship(Product)
     #products = relationship(Product)
+    def init_db():
+        db.create_all()
+
+    if __name__ == '__main__':
+        init_db()
