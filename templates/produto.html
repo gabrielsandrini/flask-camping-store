@@ -55,17 +55,16 @@ block conteudo %}
 <content class=".container-fluid container-produto">
   <div class="row info-produto">
     <div class="col-md-4 col-sm-12">
-      <img
-        src="https://media-cdn.tripadvisor.com/media/photo-s/09/c4/54/84/barraca-do-andrezao.jpg"
-        class="product-img"
-      />
+      <img src="{{product.image_url}}" class="product-img" />
     </div>
     <div class="product-title col-md-7 col-sm-12 mt-sm-4">
-      <h1>Ele é um abacaxi e mora no mar</h1>
+      <h1>{{ product.title }}</h1>
       <div class="card card-preco-container">
         <div class="card-header">Garanta seu produto:</div>
         <div class="card-body">
-          <h4 class="card-preco-valor">R$ 250,00</h4>
+          <h4 class="card-preco-valor">
+            R$ {{'%0.2f'| format(product.price|float)}}
+          </h4>
           <p class="card-text">Frete Grátis</p>
           <a href="#" class="btn btn-primary">Comprar</a>
         </div>
@@ -75,14 +74,7 @@ block conteudo %}
   <div class="row">
     <div class="product-description">
       <h2>Descrição</h2>
-      <p>
-        Vive num abacaxi e mora no mar? Bob Esponja Calça Quadrada Tem a cor
-        amarela e espirra água? Bob Esponja Calça Quadrada Se nenhuma bobagem é
-        o que você quer? Bob Esponja Calça Quadrada Diabruras à bordo e
-        problemas com peixe? Bob Esponja Calça Quadrada Todos Juntos.... Bob
-        Esponja Calça Quadrada Bob Esponja Calça Quadrada Bob Esponja Calça
-        Quadrada
-      </p>
+      <p>{{ product.description }}</p>
     </div>
   </div>
 </content>

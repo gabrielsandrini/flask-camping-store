@@ -27,7 +27,7 @@ class User(db.Model):
     username=db.Column(db.String(40),unique=True,nullable=False)
     email=db.Column(db.String(120),unique=True,nullable=False)
     password=db.Column(db.String(80),nullable=False)
-    date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
+    date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=True)
     last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
     recovery_code=db.Column(db.String(100),nullable=True) 
     active=db.Column(db.Boolean(),default=1,nullable=False) 
@@ -40,9 +40,13 @@ class ProductCategory(db.Model):
 class Product(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     title=db.Column(db.String(45), nullable=False)
+    image_url=db.Column(db.Text(), nullable=True)
     description=db.Column(db.Text(), nullable=True)
     price=db.Column(db.Float(), nullable=False)
-    category_fk=db.Column(db.Integer, db.ForeignKey(ProductCategory.id), nullable=False)
+    category_fk=db.Column(db.Integer, db.ForeignKey(ProductCategory.id), nullable=True)
+    user_fk = db.Column(db.Integer, db.ForeignKey(User.id), nullable=True)
+    date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=True)
+    last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
 
 class OrderStatus(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -58,6 +62,8 @@ class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
     product_fk = db.Column(db.Integer, db.ForeignKey(Product.id), nullable=False)
+    date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
+    last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
     # db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
 
 if __name__ == '__main__':

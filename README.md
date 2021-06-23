@@ -27,3 +27,9 @@ python3 **init**.py
 
 python3 migrate.py db init
 python3 migrate.py db migrate
+
+### Se a migração falhar
+
+python3 migrate.py db stamp head # To set the revision in the database to the head, without performing any migrations. You can change head to the required change you want.
+python3 migrate.py db migrate # To detect automatically all the changes.
+python3 migrate.py db upgrade # To apply all the changes.

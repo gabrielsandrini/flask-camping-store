@@ -59,16 +59,15 @@ block conteudo %}
 <content id="main-container">
   <section class=".container-fluid container-produtos" style="margin-top: 20px">
     <div class=".row">
+      {% for p in data.products %}
       <div class="card col-3 col-md-6 col-sm-12" style="width: 18rem">
-        <img src="..." class="card-img-top" alt="..." />
+        <img src="{{ p.image_url }}" class="card-img-top" alt="{{ p.title }}" />
         <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <p class="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
+          <h5 class="card-title">{{ p.title }}</h5>
+          <p class="card-text">{{ p.description }}</p>
+          <a href="/produto/{{ p.id }}" class="btn btn-primary">Ver mais</a>
         </div>
+        {% endfor %}
       </div>
     </div>
   </section>

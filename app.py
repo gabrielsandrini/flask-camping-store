@@ -14,6 +14,8 @@ from admin.Admin import start_views
 
 # Adicionando o controller de Usuário para efetuar a comunicação entre a view e a model.
 from controllers.User import UserController
+from controllers.Product import ProductController
+from controllers.ProductCategory import ProductCategoryController
 
 # A variável config recebe a atribuição do ambiente ativo.
 config = app_config[app_active]
@@ -53,15 +55,26 @@ def create_app(config_name):
     # Inicializando o banco de dados para a aplicação.
     db.init_app(app)
 
+    product_controller = ProductController()
+    category_controller = ProductCategoryController()
+
     # Primeira rota a ser criada. A rota principal root.
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.
     @app.route('/') 
     def index():
-        return render_template("home.html")
+        products = product_controller.list() 
+        categories = category_controller.list()
 
-    @app.route('/produto')
-    def produto():
-        return render_template("produto.html")
+        # print('products', products[0].title)
+        
+        return render_template("home.html", data={'products' : products, 'categories': categories})
+
+    @app.route('/produto/<int:product_id>')
+    def produto(product_id):
+        categories = category_controller.list()
+        product = product_controller.find_one(product_id) 
+
+        return render_template("produto.html", product=product)
 
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app
