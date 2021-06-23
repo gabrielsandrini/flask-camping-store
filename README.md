@@ -2,6 +2,10 @@
 
 Projeto de uma loja de equipamentos de camping desenvolvida no 5 semestre do curso de Análise e Desenvolvimento de Sistemas.
 
+Integrantes:
+- Gabriel Albinati Sandrini BP300508-9
+- Letícia Mayara Soares Fernandes BP300511-9
+
 Técnologias utilizadas:
 
 - Flask
