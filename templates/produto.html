@@ -21,33 +21,31 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% for c in categories %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Barracas</a>
+            <!--  prettier-ignore -->
+            <a
+              class="nav-link 
+              {% if active_category == c.id %}
+               active
+              {% endif %}"
+              aria-current="page"
+              href="/?category={{ c.id }}"
+            >
+              {{ c.description }}
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Facas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Lanternas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Mochilas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pesca</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Vestuário</a>
-          </li>
+          {% endfor %}
         </ul>
-        <form class="d-flex">
+        <form class="d-flex" method="GET" action="/">
           <input
             class="form-control me-2"
             type="search"
             placeholder="Search"
             aria-label="Search"
+            name="search"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-outline-light" type="submit">Search</button>
         </form>
       </div>
     </div>
