@@ -12,7 +12,7 @@ class UserController():
         self.usuario_model.email = email
 
         # Verifica se o usuário existe no banco de dados e atribui a resultado.
-        resultado = self.usuario_model.get_usuario_by_email()
+        resultado = self.usuario_model.get_usuario_by_email(email)
 
         # Caso o usuário exista o resultado não será None
         if resultado is not None: 

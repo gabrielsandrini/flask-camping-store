@@ -26,7 +26,6 @@ class User(db.Model):
     active=db.Column(db.Boolean(),default=1,nullable=False) 
     permission_fk=db.Column(db.Integer,db.ForeignKey(Permission.id),nullable=False)
     
-# <--- Adicione daqui pra frente ------->
     # Adicionado para permitir a relação entre a classe Usuário e a classe Perfil.
     permission = relationship(Permission)
 
@@ -37,9 +36,15 @@ class User(db.Model):
 
 
     # Métodos adicionados para configuração posterior
-    def get_usuario_by_email(self): 
-        # Método para validar se usuário existe ou não
-        return ' '
+    def get_usuario_by_email(self, email): 
+        try:
+           res = db.session.query(User).filter(User.email == email).first()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res
 
     def get_usuario_by_id(self, user_id): 
         try:
@@ -83,3 +88,22 @@ class User(db.Model):
         finally:
             db.session.close() 
             return res
+
+    @property
+    def is_authenticated(self):
+        return True
+
+
+    @property
+    def is_active(self):
+        return True
+        
+
+    @property
+    def is_anonymous(self):
+        return False
+    
+    
+    def get_id(self):
+        return str(self.id)
+        

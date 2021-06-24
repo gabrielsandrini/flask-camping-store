@@ -5,7 +5,6 @@
 # É importado da biblioteca flask, a classe Flask.
 from flask.helpers import flash, url_for
 from controllers.Order import OrderController
-from migrate import Order
 from flask import Flask
 from flask import render_template, request,redirect
 
@@ -70,8 +69,6 @@ def create_app(config_name):
         category_id = request.args.get('category')
         search = request.args.get('search')
 
-        print('args',category_id, search)
-
         products = product_controller.list(search=search, category_id=category_id) 
         categories = category_controller.list()
 
@@ -103,10 +100,14 @@ def create_app(config_name):
             flash("Erro ao efetuar pedido.", "error")
 
         return redirect(url_for("index"))
-
-    @app.route('/login')
-    def login():
-        return render_template("login.html")
         
+    @app.route('/login', methods=['POST','GET'])
+    def login():
+        if request.method == 'POST':
+            user_controller.login(email=request.form['email'], password=request.form['password'])
+            return redirect(url_for("index"))
+        else:
+            return render_template('login.html')
+
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app

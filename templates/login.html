@@ -1,29 +1,41 @@
-{% extends "base.html" %} 
-
-{% block titulo %}
-    Login
-{% endblock %}
-
-{% block styles %}
-    {{super()}}
-    <link rel="stylesheet" href="{{url_for('static', filename='styles/login.css')}}">
-{% endblock %}
-
-{% block conteudo %}
-    <div class="row align-self-center justify-content-center">
-        <form class="form-signin text-center" action="/login/" method="post">
-            <div>
-                <h1 class="h3 mb-3 font-weight-normal">Login</h1>
-                <div class="checkbox mb-3">
-                    <label for="inputEmail" class="sr-only">E-mail</label>
-                    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="E-mail" required autofocus>
-                </div>
-                <div class="checkbox mb-3">
-                    <label for="inputPassword" class="sr-only">Senha</label>
-                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
-            </div>
-        </form>
+{% extends "base.html" %} {% block titulo %} Login {% endblock %} {% block
+styles %} {{super()}}
+<link
+  rel="stylesheet"
+  href="{{url_for('static', filename='styles/login.css')}}"
+/>
+{% endblock %} {% block conteudo %}
+<div class="row align-self-center justify-content-center">
+  <form class="form-signin text-center" action="/login" method="POST">
+    <div>
+      <h1 class="h3 mb-3 font-weight-normal">Login</h1>
+      <div class="checkbox mb-3">
+        <label for="inputEmail" class="sr-only">E-mail</label>
+        <input
+          name="email"
+          type="email"
+          id="inputEmail"
+          class="form-control"
+          placeholder="E-mail"
+          required
+          autofocus
+        />
+      </div>
+      <div class="checkbox mb-3">
+        <label for="inputPassword" class="sr-only">Senha</label>
+        <input
+          name="password"
+          type="password"
+          id="inputPassword"
+          class="form-control"
+          placeholder="Senha"
+          required
+        />
+      </div>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Entrar
+      </button>
     </div>
+  </form>
+</div>
 {% endblock %}
