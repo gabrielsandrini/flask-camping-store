@@ -21,7 +21,7 @@ class Product(db.Model):
     # date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
     # last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
 
-    category=relationship(ProductCategory)
+    category=relationship(ProductCategory, lazy='subquery')
 
     def __repr__(self):
         return '%s - %s' % (self.id, self.title)
@@ -36,8 +36,17 @@ class Product(db.Model):
             db.session.close() 
             return res       
 
+
     def get_by_title(self, title):
-        return ''
+        try:
+           res = db.session.query(Product).filter(Product.title.like('%'+title+'%')).all()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res       
+
 
     def get_by_id(self, product_id): 
         try:
@@ -48,3 +57,13 @@ class Product(db.Model):
         finally:
             db.session.close() 
             return res       
+    
+    def get_by_category(self, category_id):
+        try:
+           res = db.session.query(Product).filter(Product.category_fk == category_id).all()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res

@@ -10,7 +10,7 @@ block conteudo %}
   </div>
   <nav class="navbar navbar-expand-lg navbar-dark linear-bg-nav">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Produtos</a>
+      <a class="navbar-brand" href="/">Produtos</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -24,42 +24,43 @@ block conteudo %}
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% for c in categories %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Barracas</a>
+            <!--  prettier-ignore -->
+            <a
+              class="nav-link 
+              {% if active_category == c.id %}
+               active
+              {% endif %}"
+              aria-current="page"
+              href="?category={{ c.id }}"
+            >
+              {{ c.description }}
+            </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Facas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Lanternas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Mochilas</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pesca</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Vestuário</a>
-          </li>
+          {% endfor %}
         </ul>
-        <form class="d-flex">
+        <form class="d-flex" method="GET" action="/">
           <input
             class="form-control me-2"
             type="search"
-            placeholder="Search"
-            aria-label="Search"
+            placeholder="Pesquisar..."
+            aria-label="Pesquisar..."
+            name="search"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-outline-light" type="submit">Buscar</button>
         </form>
       </div>
     </div>
   </nav>
 </header>
 <content id="main-container">
-  <section class=".container-fluid container-produtos" style="margin-top: 20px">
-    <div class=".row">
-      {% for p in data.products %}
+  <section
+    class=".container-fluid container-produtos"
+    style="margin-top: 20px; width: 100%"
+  >
+    <div class=".row" style="display: flex; gap: 25px">
+      {% for p in products %}
       <div class="card col-3 col-md-6 col-sm-12" style="width: 18rem">
         <img src="{{ p.image_url }}" class="card-img-top" alt="{{ p.title }}" />
         <div class="card-body">
@@ -67,8 +68,8 @@ block conteudo %}
           <p class="card-text">{{ p.description }}</p>
           <a href="/produto/{{ p.id }}" class="btn btn-primary">Ver mais</a>
         </div>
-        {% endfor %}
       </div>
+      {% endfor %}
     </div>
   </section>
 </content>

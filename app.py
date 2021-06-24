@@ -62,19 +62,23 @@ def create_app(config_name):
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.
     @app.route('/') 
     def index():
-        products = product_controller.list() 
+        category_id = request.args.get('category')
+        search = request.args.get('search')
+
+        print('args',category_id, search)
+
+        products = product_controller.list(search=search, category_id=category_id) 
         categories = category_controller.list()
 
-        # print('products', products[0].title)
-        
-        return render_template("home.html", data={'products' : products, 'categories': categories})
+        return render_template("home.html", products=products, categories=categories, active_category=category_id)
 
     @app.route('/produto/<int:product_id>')
     def produto(product_id):
         categories = category_controller.list()
         product = product_controller.find_one(product_id) 
+        active_category = product.category.id
 
-        return render_template("produto.html", product=product)
+        return render_template("produto.html", product=product, categories=categories, active_category=active_category)
 
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app
