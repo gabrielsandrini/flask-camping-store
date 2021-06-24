@@ -41,9 +41,15 @@ class User(db.Model):
         # Método para validar se usuário existe ou não
         return ' '
 
-    def get_usuario_by_id(self): 
-        # Método para listar dados do usuário perfil
-        return ' '
+    def get_usuario_by_id(self, user_id): 
+        try:
+           res = db.session.query(User).filter(User.id == user_id).first()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res
 
     def update_usuario(self, obj): 
         # Método para atualizar o usuário 
@@ -67,3 +73,13 @@ class User(db.Model):
             return pbkdf2_sha256.verify(password_no_hash, password_database)
         except ValueError:
             return False
+
+    def get_all(self):
+        try:
+            res = db.session.query(User).all()
+        except Exception as e:
+            res = []
+            print(e)
+        finally:
+            db.session.close() 
+            return res

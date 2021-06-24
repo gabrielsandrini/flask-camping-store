@@ -1,0 +1,84 @@
+{% extends "base.html" %} 
+{% block titulo %} Outdoor in-tents {% endblock %} 
+{% block conteudo %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark linear-bg-nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/" style="color: yellow">
+          <i class="las la-campground"></i>
+          Outdoor in tents
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Barracas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Facas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Lanternas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Mochilas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Pesca</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Vestuário</a>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <content class="container-fluid">
+      <div class="row">
+        <h1>Checkout</h1>
+        <div class="card card-preco-container">
+            <div class="card-header">{{ product.title }}</div>
+            <div class="card-body">
+                <form method="POST" action="/enviar-pedido">
+                    <input type="hidden" name="product_id" value="{{product.id}}">
+                    <h4 class="card-preco-valor">R$ {{'%0.2f'| format(product.price|float)}}</h4>
+                    <p class="card-text">Frete Grátis</p>
+                    <div class="form-group mb-2">
+                        <label for="quantity">Quantidade</label>
+                        <input id="quantity" class="form-control" type="number" name="quantity" required>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="user_id">Usuário</label>
+                        <select id="user_id" class="form-control" name="user_id">
+                            {% for u in users %}
+                                <option value="{{ u.id }}">{{ u.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Finalizar Compra</button>
+                </form>
+            </div>
+          </div>
+      </div>
+  </content>
+{% endblock%}
