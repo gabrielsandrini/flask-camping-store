@@ -8,8 +8,6 @@ class ProductController():
   def list(self, search=None, category_id=None):
     products = []
 
-    print('list',search, category_id)
-
     if search is not None:
       products = self.product_model.get_by_title(search)
     elif category_id is not None:
