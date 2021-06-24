@@ -1,5 +1,6 @@
-{% extends "base.html" %} {% block titulo %} Outdoor in-tents {% endblock %} {%
-block conteudo %}
+{% extends "base.html" %} 
+{% block titulo %} Outdoor in-tents {% endblock %} 
+{% block conteudo %}
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark linear-bg-nav">
     <div class="container-fluid">
@@ -64,7 +65,10 @@ block conteudo %}
             R$ {{'%0.2f'| format(product.price|float)}}
           </h4>
           <p class="card-text">Frete Grátis</p>
-          <a href="#" class="btn btn-primary">Comprar</a>
+          <form method="POST" action="/checkout">
+            <input type="hidden" name="product_id" value="{{product.id}}">
+            <button type="submit" class="btn btn-primary">Comprar</button>
+          </form>
         </div>
       </div>
     </div>

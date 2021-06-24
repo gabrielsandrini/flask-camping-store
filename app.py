@@ -3,6 +3,9 @@
 # -*- coding: utf-8 -*-
 
 # É importado da biblioteca flask, a classe Flask.
+from flask.helpers import flash, url_for
+from controllers.Order import OrderController
+from migrate import Order
 from flask import Flask
 from flask import render_template, request,redirect
 
@@ -57,6 +60,8 @@ def create_app(config_name):
 
     product_controller = ProductController()
     category_controller = ProductCategoryController()
+    user_controller = UserController()
+    order_controller = OrderController()
 
     # Primeira rota a ser criada. A rota principal root.
     # Quando se cria duas ou mais rotas seguidas antes do método, isso indica ao navegador que qualquer uma delas acessa o método a seguir. Neste exemplo tanto http://localhost:8000/ e http://localhost:8000/login/ acessam o médtodo index(). Que retorna uma string.
@@ -80,5 +85,24 @@ def create_app(config_name):
 
         return render_template("produto.html", product=product, categories=categories, active_category=active_category)
 
+    @app.route('/checkout', methods=['POST'])
+    def checkout():
+        product_id = request.form['product_id']
+        product = product_controller.find_one(product_id) 
+        users = user_controller.list()
+
+        return render_template("checkout.html", product=product, users=users)
+
+    @app.route('/enviar-pedido', methods=['POST'])
+    def enviar_pedido():
+        resultado = order_controller.save_order(request.form)
+
+        if (resultado):
+            flash("Pedido efetuado com sucesso!", "info")
+        else:
+            flash("Erro ao efetuar pedido.", "error")
+
+        return redirect(url_for("index"))
+        
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app

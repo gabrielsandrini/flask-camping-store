@@ -21,8 +21,9 @@ db = SQLAlchemy(config.APP)
 
 class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
+    status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id), nullable=True)
     #products_fk=db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
+    quantity=db.Column(db.Integer)
     product_fk = db.Column(db.Integer, db.ForeignKey(Product.id), nullable=False)
     user_fk = db.Column(db.Integer, db.ForeignKey(User.id), nullable=True)
     date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
@@ -32,6 +33,18 @@ class Order(db.Model):
     product = relationship(Product)
     user = relationship(User)
     #products = relationship(Product)
-    
+
     def __repr__(self):
         return '%s - %s' % (self.id, self.product - self.user - self.date_created)
+
+    def save(self):
+        try:
+            db.session.add(self) 
+            db.session.commit() 
+            return True
+        except Exception as e:
+            print(e)
+            db.session.rollback()
+            return False
+    
+    

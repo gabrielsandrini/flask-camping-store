@@ -30,3 +30,9 @@ class UserController():
             # Criado somente para exemplificar a recuperação de senha por email. 
             # Rota do app.py: @app.route('/recuperar-senha/', methods=['POST']) 
             return ''
+
+    def list(self):
+        return self.usuario_model.get_all()
+
+    def find_one(self, user_id):
+        return self.usuario_model.get_usuario_by_id(user_id)

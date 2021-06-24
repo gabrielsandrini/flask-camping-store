@@ -60,8 +60,10 @@ order_products_table = db.Table('order_products',
 
 class Order(db.Model):
     id=db.Column(db.Integer,primary_key=True)
-    status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id))
+    status_fk=db.Column(db.Integer, db.ForeignKey(OrderStatus.id), nullable=True)
     product_fk = db.Column(db.Integer, db.ForeignKey(Product.id), nullable=False)
+    user_fk = db.Column(db.Integer, db.ForeignKey(User.id), nullable=True)
+    quantity=db.Column(db.Integer)
     date_created=db.Column(db.DateTime(6),default=db.func.current_timestamp(),nullable=False)
     last_update=db.Column(db.DateTime(6),onupdate=db.func.current_timestamp(),nullable=True) 
     # db.relationship(Product, secondary=order_products_table, lazy='subquery', backref=db.backref('orders', lazy=True))
