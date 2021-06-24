@@ -103,6 +103,10 @@ def create_app(config_name):
             flash("Erro ao efetuar pedido.", "error")
 
         return redirect(url_for("index"))
+
+    @app.route('/login')
+    def login():
+        return render_template("login.html")
         
     # Retorno do método create_app(). Retorna a instância do app criada.
     return app
